@@ -1,0 +1,147 @@
+:root {
+    --main-bg-color: rgb(3, 11, 22);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--main-bg-color);
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#message-box {
+    height: 100%;
+    width: 100%;
+    max-width: 700px;
+    max-height: 800px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#header {
+    background-color: rgb(15, 33, 46);
+    flex-grow: 1.5;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    box-shadow: 0px -2px 7px 5px #000000;
+    z-index: 2;
+}
+
+#online {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 10px;
+    flex-basis: 0;
+}
+
+#titre {
+    flex-grow: 2;
+    display: block;
+    margin: auto;
+    text-align: center;
+    flex-basis: 0;
+}
+
+#titre h2 {
+    margin: 0;
+}
+
+#username {
+    display: block;
+    margin: auto;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+#username input {
+    width: 80%;
+    height: 25px;
+}
+
+#online-circle {
+    height: 10px;
+    width: 10px;
+    background-color: green;
+    border-radius: 50%;
+}
+
+#messages {
+    background-color: rgb(15, 33, 46);
+    flex-grow: 10;
+    width: auto;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+#tchat {
+    background-color: rgb(37, 55, 66);
+    flex-grow: 1;
+    width: auto;
+}
+
+.message-box {
+    display: block;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    background-color: rgb(37, 55, 66);
+    color: white;
+    line-height: 1.3em;
+}
+
+.name {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+#tchat input:first-of-type{
+    color: rgb(255, 255, 255);
+    background: rgb(15, 33, 46);
+    box-shadow: rgb(0 0 0 / 20%) 0px 1px 3px 0px, rgb(0 0 0 / 12%) 0px 1px 2px 0px;
+    border: 2px solid rgb(47, 69, 83);
+    border-radius: 0.25rem;
+    letter-spacing: 0px;
+    font-weight: 500;
+    transition: all 200ms ease-out 0s;
+    outline: 0px;
+    cursor: text;
+    padding: 0.5em;
+    resize: none;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-height: calc(1.5em + 4px);
+    width: calc(100% - 1em - 44px);
+    margin: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+}
+
+#tchat input:nth-child(2){
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 0.25rem;
+    transition: background 300ms ease 0s, opacity 300ms ease 0s, transform 100ms ease 0s;
+    line-height: 1.5;
+    color: rgb(1, 62, 1);
+    background: rgb(31, 255, 32);
+    box-shadow: rgb(0 0 0 / 20%) 0px 1px 3px 0px, rgb(0 0 0 / 12%) 0px 1px 2px 0px;
+    padding: calc(0.5em + 2px) 1em;
+    outline: none;
+    border: none;
+}

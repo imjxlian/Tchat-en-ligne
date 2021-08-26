@@ -53,7 +53,16 @@ app.post('/api', (request, response) => {
   io.emit('update messages', data.username, data.message);
 });
 
+let countUserOnline = 0;
+
 io.on('connection', (socket) => {
   console.log(`[connexion] ${socket.id}`);
   io.to(socket.id).emit('get messages');
+  countUserOnline++;
+  io.emit(('update online'), countUserOnline);
+  socket.on('disconnect', () => {
+    console.log(`[déconnexion] ${socket.id}`);
+    countUserOnline--;
+    io.emit(('update online'), countUserOnline);
+  });
 })

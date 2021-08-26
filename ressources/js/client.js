@@ -5,6 +5,17 @@ const msgInput = document.getElementById("message");
 const messagesContainer = document.getElementById("messages");
 const error = document.getElementById("error");
 
+$('input[type=text]').on('keydown', function(e) {
+  if (e.which == 13) {
+      e.preventDefault();
+      sendMessage(userInput.value, msgInput.value);
+  }
+});
+
+socket.on('update online', (count) => {
+  document.getElementById('user-count').textContent = count + " online";
+});
+
 socket.on("get messages", () => {
   userInput.value = getCookie("username");
   messagesContainer.textContent = "";
@@ -47,6 +58,7 @@ async function sendMessage(username, message) {
     $("#error").hide().fadeIn();
     error.textContent = "Veuillez saisir un pseudo valide.";
   }
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
 function updateMessages(username, message) {

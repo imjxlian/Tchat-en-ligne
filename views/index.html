@@ -20,7 +20,7 @@
             <div id="header">
                 <div id="online">
                     <div id="online-circle"></div>
-                    <span>18 online</span>
+                    <span id="user-count">18 online</span>
                 </div>
                 <div id="titre">
                     <h2>Tchat en ligne</h2>
@@ -42,8 +42,9 @@
                 </div>
             </div>
             <div id="tchat">
-                <input id="message" type="text" name="tchat" placeholder="Ecrivez un message...">
-                <input id="sendMessage" type="submit" name="submit" value="Envoyer" onclick="sendMessage(nickname.value, message.value)">
+                    <input id="message" type="text" name="tchat" placeholder="Ecrivez un message...">
+                    <input id="sendMessage" type="submit" name="submit" value="Envoyer"
+                        onclick="sendMessage(nickname.value, message.value)">
                 <div id="error"></div>
             </div>
         </div>

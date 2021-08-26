@@ -173,6 +173,7 @@ html, body {
   padding: calc(0.5em + 2px) 1em;
   outline: none;
   width: 150px;
+  -webkit-appearance: none;
 }
 
 #tchat input:nth-child(2):hover {

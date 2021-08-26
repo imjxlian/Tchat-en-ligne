@@ -5,15 +5,8 @@ const msgInput = document.getElementById("message");
 const messagesContainer = document.getElementById("messages");
 const error = document.getElementById("error");
 
-$('input[type=text]').on('keydown', function(e) {
-  if (e.which == 13) {
-      e.preventDefault();
-      sendMessage(userInput.value, msgInput.value);
-  }
-});
-
-socket.on('update online', (count) => {
-  document.getElementById('user-count').textContent = count + " online";
+socket.on("update online", (count) => {
+  document.getElementById("user-count").textContent = count + " online";
 });
 
 socket.on("get messages", () => {
@@ -26,6 +19,21 @@ socket.on("update messages", (username, message) => {
   updateMessages(username, message);
 });
 
+/**
+ * Send message when ENTER Key is pressed
+ */
+ $("input[type=text]").on("keydown", function (e) {
+  if (e.which == 13) {
+    e.preventDefault();
+    sendMessage(userInput.value, msgInput.value);
+  }
+});
+
+/**
+ * Send a message to the server
+ * @param {String} username - The username
+ * @param {String} message - The message
+ */
 async function sendMessage(username, message) {
   console.log(username, message);
 
@@ -51,18 +59,47 @@ async function sendMessage(username, message) {
       $("#error").hide().fadeOut();
       msgInput.value = "";
     } else {
-      $("#error").hide().fadeIn();
-      error.textContent = "Veuillez saisir un message valide.";
+      createMessage(username, message, "Veuillez saisir un message valide.");
     }
   } else {
-    $("#error").hide().fadeIn();
-    error.textContent = "Veuillez saisir un pseudo valide.";
+    createMessage(username, message, "Veuillez saisir un pseudo valide.");
   }
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
+/**
+ * Update a message for the user
+ * @param {String} username - The username
+ * @param {String} message - The message
+ */
 function updateMessages(username, message) {
-  messagesContainer.firstElementChild.remove;
+  if (messagesContainer.firstElementChild != null) {
+    messagesContainer.firstElementChild.remove;
+  }
+  createMessage(username, message, false);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+/**
+ * Get all the first 25 messages from the server
+ */
+async function getMessages() {
+  const response = await fetch("/api");
+  const data = await response.json();
+  for (entry of data) {
+    createMessage(`${entry.username}`, `${entry.message}`, false);
+  }
+  var chatHistory = messagesContainer;
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+/**
+ * Send a message to the server
+ * @param {String} username - The username
+ * @param {String} message - The message
+ * @param {String/Boolean} error - If it's an error message, the text error, else, false.
+ */
+function createMessage(username, message, error) {
   const msgBoxDiv = document.createElement("div");
   const nameDiv = document.createElement("div");
   const messageDiv = document.createElement("div");
@@ -78,33 +115,23 @@ function updateMessages(username, message) {
   messageDiv.classList.add("message");
   nameSpan.textContent = username;
   msgSpan.textContent = message;
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
-async function getMessages() {
-  const response = await fetch("/api");
-  const data = await response.json();
-  for (entry of data) {
-    const msgBoxDiv = document.createElement("div");
-    const nameDiv = document.createElement("div");
-    const messageDiv = document.createElement("div");
-    const nameSpan = document.createElement("span");
-    const msgSpan = document.createElement("span");
-    messagesContainer.appendChild(msgBoxDiv);
-    msgBoxDiv.appendChild(nameDiv);
-    msgBoxDiv.appendChild(messageDiv);
-    nameDiv.appendChild(nameSpan);
-    messageDiv.appendChild(msgSpan);
-    msgBoxDiv.classList.add("message-box");
-    nameDiv.classList.add("name");
-    messageDiv.classList.add("message");
-    nameSpan.textContent = `${entry.username}`;
-    msgSpan.textContent = `${entry.message}`;
+  if (error != false) {
+    msgBoxDiv.classList.add("error");
+    msgBoxDiv.onclick = msgBoxDiv.remove;
+    nameSpan.textContent = "Erreur";
+    msgSpan.textContent = error;
   }
-  var chatHistory = messagesContainer;
-  chatHistory.scrollTop = chatHistory.scrollHeight;
 }
 
+/**
+ * Set cookie into the user's navigator
+ * @param {String} nom - Name of the cookie
+ * @param {String} valeur - Value of the cookie
+ * @param {Int} expire - Time of expiration
+ * @param {String} chemin - Cookie's location
+ * @param {String} domaine - Cookie's domain
+ * @param {String} securite - Cookie's security
+ */
 function setCookie(nom, valeur, expire, chemin, domaine, securite) {
   document.cookie =
     nom +
@@ -117,6 +144,11 @@ function setCookie(nom, valeur, expire, chemin, domaine, securite) {
     (securite == true ? "; secure" : "");
 }
 
+/**
+ * Get all informations about a cookie
+ * @param {String} name - Name of the cookie
+ * @returns 
+ */
 function getCookie(name) {
   if (document.cookie.length == 0) return null;
 

@@ -181,3 +181,20 @@ body {
     color: white;
     cursor: pointer;
 }
+
+#error{
+  color: white;
+  background-color: rgb(216, 44, 44);
+  padding: 10px;
+  border-radius: 3px;
+  transition: all .2s ease .2s;
+  display: none;
+}
+
+@media screen and (max-width: 640px){
+  #message-box{
+    max-height: none;
+    border-radius: 0px;
+    height: 100vh;
+  }
+}

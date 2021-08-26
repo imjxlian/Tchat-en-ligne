@@ -44,9 +44,12 @@
             <div id="tchat">
                 <input id="message" type="text" name="tchat" placeholder="Ecrivez un message...">
                 <input id="sendMessage" type="submit" name="submit" value="Envoyer" onclick="sendMessage(nickname.value, message.value)">
+                <div id="error"></div>
             </div>
         </div>
     </div>
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/js/client.js"></script>
 </body>
 

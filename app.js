@@ -5,7 +5,6 @@ const Datastore = require('nedb');
 const app = express();
 const http = require('http').createServer(app);
 const path = require('path');
-const { expr } = require('jquery');
 const port = 3000;
 
 /**
@@ -13,14 +12,12 @@ const port = 3000;
  */
 const io = require('socket.io')(http);
 
-app.listen(3000, () => console.log('listening at 3000'));
+http.listen(3000, () => console.log('listening at 3000'));
 
-app.use('/js', express.static(__dirname + '/ressources/js'));
-app.use('/css', express.static(__dirname + '/ressources/css'));
 app.use('/bootstrap/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/bootstrap/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-app.use(express.static('public'));
+app.use(express.static('ressources'));
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -42,7 +39,7 @@ app.get('/api', (request, response) => {
 });
 
 app.post('/api', (request, response) => {
-  console.log('Request!');
+  console.log("We've a message");
   console.log(request.body);
   const data = request.body;
   const timestamp = Date.now();
@@ -53,4 +50,10 @@ app.post('/api', (request, response) => {
     user: data.username,
     msg: data.message
   })
+  io.emit('update messages', data.username, data.message);
 });
+
+io.on('connection', (socket) => {
+  console.log(`[connexion] ${socket.id}`);
+  io.to(socket.id).emit('get messages');
+})

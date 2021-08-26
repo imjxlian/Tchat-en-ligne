@@ -105,6 +105,7 @@ html, body {
   background-color: rgb(15, 33, 46);
   overflow-y: scroll;
   scrollbar-width: thin;
+  min-height: calc(800px - 239px);
 }
 
 #tchat {
@@ -205,5 +206,9 @@ html, body {
     border-radius: 0px;
     max-height: -webkit-fill-available;
     height: 100vh;
+  }
+
+  #messages{
+    min-height: calc(100% - 239px);
   }
 }

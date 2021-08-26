@@ -22,7 +22,7 @@ async function sendMessage(username, message) {
     if (message.length > 0) {
       if (getCookie("username") != username) {
         var dtExpire = new Date();
-        dtExpire.setTime(dtExpire.getTime() + 3600 * 1000);
+        dtExpire.setTime(dtExpire.getTime() + 3600 * 24000);
 
         setCookie("username", username, dtExpire, "/");
       }

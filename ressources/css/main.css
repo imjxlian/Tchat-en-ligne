@@ -2,26 +2,28 @@
   --main-bg-color: rgb(3, 11, 22);
 }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   background-color: var(--main-bg-color);
   font-family: "Ubuntu", sans-serif;
+  width: 100%;
+  min-height: -webkit-fill-available;
 }
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 #message-box {
-  height: 100%;
+  min-height: -webkit-fill-available;
+  max-height: 800px;
   width: 100%;
   max-width: 700px;
-  max-height: 800px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -30,7 +32,6 @@ body {
 
 #header {
   background-color: rgb(15, 33, 46);
-  flex-grow: 1.5;
   width: auto;
   display: flex;
   flex-direction: row;
@@ -102,15 +103,12 @@ body {
 
 #messages {
   background-color: rgb(15, 33, 46);
-  flex-grow: 10;
-  width: auto;
   overflow-y: scroll;
   scrollbar-width: thin;
 }
 
 #tchat {
   background-color: rgb(37, 55, 66);
-  flex-grow: 1;
   width: auto;
   display: flex;
   flex-direction: column;
@@ -118,6 +116,9 @@ body {
   justify-content: center;
   gap: 20px;
   padding: 20px;
+  box-shadow: 0px 2px 7px 5px #000000;
+  z-index: 5;
+  overflow: visible;
 }
 
 .message-box {
@@ -163,8 +164,7 @@ body {
   font-weight: 600;
   font-size: 0.875rem;
   border-radius: 0.25rem;
-  transition: background 300ms ease 0s, opacity 300ms ease 0s,
-    transform 100ms ease 0s;
+  transition: background 300ms ease 0s, opacity 300ms ease 0s, transform 100ms ease 0s;
   line-height: 1.5;
   color: rgb(1, 62, 1);
   background: rgb(31, 255, 32);
@@ -175,14 +175,14 @@ body {
   width: 150px;
 }
 
-#tchat input:nth-child(2):hover{
-    background: transparent;
-    border: 2px solid white;
-    color: white;
-    cursor: pointer;
+#tchat input:nth-child(2):hover {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
 }
 
-#error{
+#error {
   color: white;
   background-color: rgb(216, 44, 44);
   padding: 10px;
@@ -191,10 +191,18 @@ body {
   display: none;
 }
 
-@media screen and (max-width: 640px){
-  #message-box{
-    max-height: none;
+@media screen and (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+
+  .container{
+    min-height: -webkit-fill-available;
+  }
+
+  #message-box {
     border-radius: 0px;
+    max-height: -webkit-fill-available;
     height: 100vh;
   }
 }

@@ -5,14 +5,14 @@ const Datastore = require('nedb');
 const app = express();
 const http = require('http').createServer(app);
 const path = require('path');
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 /**
  * @type {Socket}
  */
 const io = require('socket.io')(http);
 
-http.listen(3000, () => console.log('listening at 3000'));
+http.listen(port, () => console.log(`listening at ${port}`));
 
 app.use('/bootstrap/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
 app.use('/bootstrap/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));

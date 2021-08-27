@@ -22,7 +22,7 @@ socket.on("update messages", (username, message) => {
 /**
  * Send message when ENTER Key is pressed
  */
- $("input[type=text]").on("keydown", function (e) {
+$("input[type=text]").on("keydown", function (e) {
   if (e.which == 13) {
     e.preventDefault();
     sendMessage(userInput.value, msgInput.value);
@@ -73,9 +73,7 @@ async function sendMessage(username, message) {
  * @param {String} message - The message
  */
 function updateMessages(username, message) {
-  if (messagesContainer.firstElementChild != null) {
-    messagesContainer.firstElementChild.remove;
-  }
+  messagesContainer.firstElementChild.remove;
   createMessage(username, message, false);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
@@ -147,7 +145,7 @@ function setCookie(nom, valeur, expire, chemin, domaine, securite) {
 /**
  * Get all informations about a cookie
  * @param {String} name - Name of the cookie
- * @returns 
+ * @returns
  */
 function getCookie(name) {
   if (document.cookie.length == 0) return null;

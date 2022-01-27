@@ -15,8 +15,8 @@ socket.on("get messages", () => {
   getMessages();
 });
 
-socket.on("update messages", (username, message) => {
-  updateMessages(username, message);
+socket.on("update messages", (username, message, deleteMsg) => {
+  updateMessages(username, message, deleteMsg);
 });
 
 /**
@@ -35,8 +35,6 @@ $("input[type=text]").on("keydown", function (e) {
  * @param {String} message - The message
  */
 async function sendMessage(username, message) {
-  console.log(username, message);
-
   if (username.length > 0) {
     if (message.length > 0) {
       if (getCookie("username") != username) {
@@ -71,15 +69,17 @@ async function sendMessage(username, message) {
  * Update a message for the user
  * @param {String} username - The username
  * @param {String} message - The message
+ * @param {boolean} deleteMsg - True if the total number of messages exceed 15
  */
-function updateMessages(username, message) {
-  messagesContainer.firstElementChild.remove;
+function updateMessages(username, message, deleteMsg) {
+  if(deleteMsg)
+    messagesContainer.firstChild.remove()
   createMessage(username, message, false);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
 /**
- * Get all the first 25 messages from the server
+ * Get all the first 15 messages from the server
  */
 async function getMessages() {
   const response = await fetch("/api");
@@ -113,7 +113,7 @@ function createMessage(username, message, error) {
   messageDiv.classList.add("message");
   nameSpan.textContent = username;
   msgSpan.textContent = message;
-  if (error != false) {
+  if (error) {
     msgBoxDiv.classList.add("error");
     msgBoxDiv.onclick = msgBoxDiv.remove;
     nameSpan.textContent = "Erreur";

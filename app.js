@@ -39,7 +39,6 @@ app.get('/api', (request, response) => {
 });
 
 app.post('/api', (request, response) => {
-  console.log("We've a message");
   console.log(request.body);
   const data = request.body;
   const timestamp = Date.now();
@@ -50,7 +49,12 @@ app.post('/api', (request, response) => {
     user: data.username,
     msg: data.message
   })
-  io.emit('update messages', data.username, data.message);
+  database.count({}, function (err, count) {
+		let deleteMsg = count >= 15 ? true : false;
+    io.emit('update messages', data.username, data.message, deleteMsg);
+    if(err != null)
+      console.log(err)
+	});
 });
 
 let countUserOnline = 0;
